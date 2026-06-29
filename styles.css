@@ -1,0 +1,549 @@
+:root {
+    --bg-color: #ffffff;
+    --text-primary: #111111;
+    --text-secondary: #707070;
+    --light-gray: #f5f5f5;
+    --border-color: #e5e5e5;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Top Utility Bar */
+.top-bar {
+    background-color: var(--light-gray);
+    text-align: center;
+    padding: 10px 5%;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.top-bar a {
+    color: var(--text-primary);
+    text-decoration: underline;
+    margin-left: 5px;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%;
+    height: 70px;
+    background-color: var(--bg-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid transparent;
+    transition: var(--transition);
+}
+
+.navbar.scrolled {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.nav-links a:hover {
+    color: var(--text-secondary);
+}
+
+.nav-actions {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-actions a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 4rem 5%;
+    overflow: hidden;
+    /* Premium dark default background */
+    background: #0a0a0a;
+}
+
+/* Default dark background — only visible when no image is uploaded */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    /* Deep layered gradient */
+    background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(255,255,255,0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 80% at 90% 80%, rgba(180,160,120,0.08) 0%, transparent 60%),
+        linear-gradient(160deg, #111111 0%, #0a0a0a 40%, #141414 70%, #0d0d0d 100%);
+    transition: opacity 0.5s ease;
+}
+
+/* Diagonal stripe pattern overlay */
+.hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image: repeating-linear-gradient(
+        -55deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,0.018) 40px,
+        rgba(255,255,255,0.018) 41px
+    );
+    pointer-events: none;
+}
+
+/* Animated glow blob top-right */
+.hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    /* When no image set, show nothing — default is handled by .hero::before */
+}
+
+/* Glow accent — hidden when image is loaded via JS */
+.hero-glow {
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: 55%;
+    height: 80%;
+    background: radial-gradient(ellipse at center, rgba(200,170,100,0.12) 0%, transparent 65%);
+    z-index: 1;
+    pointer-events: none;
+    animation: heroGlowPulse 6s ease-in-out infinite;
+}
+
+@keyframes heroGlowPulse {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50%       { opacity: 1;   transform: scale(1.08); }
+}
+
+/* Animated floating particles */
+.hero-particles {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.hero-particles span {
+    position: absolute;
+    display: block;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.35);
+    animation: floatParticle linear infinite;
+}
+.hero-particles span:nth-child(1)  { left: 10%; animation-duration: 14s; animation-delay: 0s;   width:1px; height:1px; }
+.hero-particles span:nth-child(2)  { left: 25%; animation-duration: 18s; animation-delay: 2s; }
+.hero-particles span:nth-child(3)  { left: 42%; animation-duration: 12s; animation-delay: 4s;   width:3px; height:3px; background: rgba(255,255,255,0.15); }
+.hero-particles span:nth-child(4)  { left: 60%; animation-duration: 20s; animation-delay: 1s; }
+.hero-particles span:nth-child(5)  { left: 75%; animation-duration: 16s; animation-delay: 5s;   width:1px; height:1px; }
+.hero-particles span:nth-child(6)  { left: 88%; animation-duration: 11s; animation-delay: 3s; }
+.hero-particles span:nth-child(7)  { left: 33%; animation-duration: 22s; animation-delay: 6s;   width:1px; height:1px; }
+.hero-particles span:nth-child(8)  { left: 55%; animation-duration: 17s; animation-delay: 0.5s; width:3px; height:3px; background: rgba(200,170,100,0.2); }
+
+@keyframes floatParticle {
+    0%   { bottom: -10px; opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { bottom: 105%; opacity: 0; }
+}
+
+/* Bottom fade overlay — always on top of both default and uploaded image */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.65) 0%,
+        rgba(0,0,0,0.15) 35%,
+        transparent 60%
+    );
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    color: #ffffff;
+    max-width: 600px;
+}
+
+.hero h1 {
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+
+/* Hero Upload Button */
+.hero-upload-btn {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #ffffff;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.25s ease;
+    opacity: 0;
+    transform: translateY(6px);
+}
+
+.hero:hover .hero-upload-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero-upload-btn:hover {
+    background: rgba(0, 0, 0, 0.85);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.btn-dark {
+    background-color: #ffffff;
+    color: #111111;
+    border: 1px solid #ffffff;
+}
+
+.btn-dark:hover {
+    background-color: #e5e5e5;
+    border-color: #e5e5e5;
+}
+
+/* Products Section */
+.products-section {
+    padding: 5rem 5%;
+}
+
+.section-header {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.section-header h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.product-carousel {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-image {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background-color: var(--light-gray);
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-meta h3 {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.category {
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.color-count {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.price {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.btn-shop {
+    display: inline-block;
+    background-color: #111111;
+    color: #ffffff;
+    padding: 14px 24px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 500;
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+.btn-shop:hover {
+    background-color: #333333;
+}
+
+/* Campaign Section */
+.campaign-section {
+    padding: 2rem 5% 5rem;
+}
+
+.campaign-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.campaign-text {
+    padding-right: 2rem;
+}
+
+.campaign-text h2 {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.campaign-text p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.campaign-text .btn-dark {
+    background-color: #111111;
+    color: #ffffff;
+    border-color: #111111;
+}
+
+.campaign-text .btn-dark:hover {
+    background-color: #333333;
+    border-color: #333333;
+}
+
+.campaign-image {
+    aspect-ratio: 1/1;
+}
+
+/* Footer */
+footer {
+    background-color: #111111;
+    color: #ffffff;
+    padding: 4rem 5% 2rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.footer-column h4 {
+    font-size: 0.9rem;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.footer-column a {
+    display: block;
+    color: #7e7e7e;
+    text-decoration: none;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.footer-column a:hover {
+    color: #ffffff;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid #333333;
+    padding-top: 2rem;
+}
+
+.footer-logo {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+.footer-bottom p {
+    color: #7e7e7e;
+    font-size: 0.85rem;
+}
+
+.footer-legal {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.footer-legal a {
+    color: #7e7e7e;
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+
+.footer-legal a:hover {
+    color: #ffffff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+    
+    .hero {
+        height: 70vh;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .campaign-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .campaign-text {
+        padding-right: 0;
+        margin-bottom: 2rem;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+}
+
+/* Modal Styles */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(5px); }
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+.modal-content { background-color: #ffffff; width: 90%; max-width: 500px; padding: 2.5rem; border-radius: 8px; position: relative; transform: translateY(20px); transition: transform 0.3s ease; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+.modal-overlay.active .modal-content { transform: translateY(0); }
+.close-modal { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #707070; transition: color 0.2s ease; }
+.close-modal:hover { color: #111111; }
+.modal-content h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.modal-subtitle { color: #707070; font-size: 0.9rem; margin-bottom: 2rem; }
+.order-summary { background-color: #f5f5f5; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; font-size: 0.95rem; }
+.form-group { margin-bottom: 1.5rem; }
+.form-group label { display: block; font-weight: 500; margin-bottom: 0.5rem; font-size: 0.9rem; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #e5e5e5; border-radius: 4px; font-family: inherit; font-size: 1rem; transition: border-color 0.2s ease; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #111111; }
+.btn-submit-wa { width: 100%; background-color: #25D366; color: white; border: none; padding: 16px; font-size: 1rem; font-weight: 700; border-radius: 4px; cursor: pointer; transition: background-color 0.2s ease; }
+.btn-submit-wa:hover { background-color: #1ebe57; }
