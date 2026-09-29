@@ -84,36 +84,4 @@ document.addEventListener('DOMContentLoaded', () => {
         orderForm.reset();
     });
 
-    // --- Hero Image Upload Logic ---
-    const heroBg = document.getElementById('heroBg');
-    const heroUpload = document.getElementById('heroUpload');
-
-    // Restore saved hero image from localStorage on load
-    const savedHero = localStorage.getItem('cult2_hero_image');
-    if (savedHero) {
-        heroBg.style.backgroundImage = `url('${savedHero}')`;
-    }
-
-    // Handle file selection
-    heroUpload.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-            const dataUrl = ev.target.result;
-            heroBg.style.backgroundImage = `url('${dataUrl}')`;
-            // Save to localStorage so it persists on refresh
-            try {
-                localStorage.setItem('cult2_hero_image', dataUrl);
-            } catch (err) {
-                // localStorage full (image too large) - still applies but won't persist
-                console.warn('Gambar terlalu besar untuk disimpan, tidak akan tersimpan setelah refresh.');
-            }
-        };
-        reader.readAsDataURL(file);
-        // Reset input so same file can be re-selected
-        e.target.value = '';
-    });
 });
-
