@@ -49,6 +49,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const qtyInput = document.getElementById('detailQuantity');
     const qtyMinusBtn = document.getElementById('qtyMinusBtn');
     const qtyPlusBtn = document.getElementById('qtyPlusBtn');
+    const quantityControls = window.QuantityControls.createQuantityControls(
+        qtyInput,
+        () => window.selectedProduct?.stock || 50
+    );
     const detailAlert = document.getElementById('detailAlert');
     const detailBuyWaBtn = document.getElementById('detailBuyWaBtn');
 
@@ -195,22 +199,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Quantity Increment / Decrement
     if (qtyMinusBtn && qtyInput) {
-        qtyMinusBtn.addEventListener('click', () => {
-            let current = parseInt(qtyInput.value) || 1;
-            if (current > 1) {
-                qtyInput.value = current - 1;
-            }
-        });
+        qtyMinusBtn.addEventListener('click', quantityControls.decrement);
     }
 
     if (qtyPlusBtn && qtyInput) {
-        qtyPlusBtn.addEventListener('click', () => {
-            let current = parseInt(qtyInput.value) || 1;
-            const max = window.selectedProduct?.stock || 50;
-            if (current < max) {
-                qtyInput.value = current + 1;
-            }
-        });
+        qtyPlusBtn.addEventListener('click', quantityControls.increment);
     }
 
     // WhatsApp Order from Detail Modal
